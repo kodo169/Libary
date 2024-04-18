@@ -26,14 +26,9 @@
 
     <!-- Template Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
+    @RenderSection("scripts", required: false)
 </head>
 <body>
-    
-    <!-- Spinner Start -->
-    <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-        <div class="spinner-grow text-primary" role="status"></div>
-    </div>
-    <!-- Spinner End -->
 
     <div>
         <!-- Navbar start -->
@@ -59,7 +54,7 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a class="nav-item nav-link active" asp-area="" asp-controller="listBook" asp-action="index">Libary</a>
+                            <a class="nav-item nav-link act" asp-area="" asp-controller="listBook" asp-action="index">Libary</a>
                             <a href="shop.html" class="nav-item nav-link">Shop</a>
                             <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
                             <div class="nav-item dropdown">
@@ -98,12 +93,15 @@
                     </div>
                     <div class="modal-body d-flex align-items-center">
                         <div class="input-group w-75 mx-auto d-flex">
-                            <form asp-action="Search" asp-controller="listBook">
+                            <form asp-action="searchs" asp-controller="listBook" class="input-group">
                                 <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1" name="query">
-                                <button>
-                                    <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                                </button>
+                                <div class="input-group-append">
+                                    <button class="btn" type="submit" id="search-icon-1" style="background-color:aliceblue; height: 75px;border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
@@ -123,5 +121,6 @@
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
 </body>
 
-    <script src="js/main.js"></script>
+    <script src="~/js/main.js"></script>
+    @RenderSection("scripts", required: false)
 </html>

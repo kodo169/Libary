@@ -1,7 +1,6 @@
-﻿@model IEnumerable<Libary.ViewModels.listBook_ViewModels>
-@{
-    Layout = "_ListBook";
-}
+﻿@using X.PagedList.Mvc.Core
+@model IEnumerable<Libary.ViewModels.listBook_ViewModels>
+
 @if (Model != null)
 {
     @foreach (var item in Model)
@@ -9,13 +8,17 @@
         <div class="col-md-6 col-lg-6 col-xl-4">
             <div class="rounded position-relative fruite-item">
                 <div class="fruite-img">
+                    <a asp-action="Detail" asp-controller="listBook" asp-route-id="@item.idBook">
                     <img src="@item.pictureBook" class="img-fluid w-100 rounded-top" style="height :400px;" alt="">
+                    </a>
                 </div>
-                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Books</div>
+                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">@item.nameCategory</div>
                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                    <a asp-action="Detail" asp-controller="listBook" asp-route-id="@item.idBook">
                     <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         @item.nameBook
                     </h4>
+                    </a>
                     <div class="d-flex justify-content-between flex-lg-wrap">
                         <p class="text-dark fs-5 fw-bold mb-0"> @item.numberBook</p>
                         <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
@@ -25,3 +28,5 @@
         </div>
     }
 }
+
+

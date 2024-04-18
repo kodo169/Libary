@@ -11,7 +11,7 @@ public partial class Book
 
     public string? Content { get; set; }
 
-    public DateTime? PublicationYear { get; set; }
+    public DateOnly? PublicationYear { get; set; }
 
     public int NumberBook { get; set; }
 

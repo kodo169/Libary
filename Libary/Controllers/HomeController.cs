@@ -17,7 +17,11 @@ namespace Libary.Controllers
         {
             return View();
         }
-
+        [Route("/404")]
+        public IActionResult notFound()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

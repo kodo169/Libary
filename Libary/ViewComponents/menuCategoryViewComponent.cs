@@ -9,7 +9,7 @@ namespace Libary.ViewComponents
         public readonly LibaryContext _data;
         public menuCategoryViewComponent(LibaryContext data) => _data = data;
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(int? idcategory)
         {
             var data = _data.Categories.Select(dataCategory => new menuCategory_ViewModels
             {

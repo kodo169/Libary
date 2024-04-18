@@ -7,10 +7,9 @@
                 @foreach (var item in Model)
                 {
                     <div class="d-flex justify-content-between fruite-name">
-                        <a asp-controller="listBook" asp-action="Index" asp-route-category ="@item.categoryID">
+                        <a asp-controller="listBook" asp-action="categoryBook" asp-route-category="@item.categoryID">
                             <i class="bi bi-book"></i>  @item.categoryName
                         </a>
-                        <span>@item.categoryName</span>
                     </div>
                 }
             </li>

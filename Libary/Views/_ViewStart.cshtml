@@ -1,3 +1,27 @@
 ﻿@{
-    Layout = "_LayoutCustomer";
+    Layout = "_ListBook";
 }
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Axios in Web Browser</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // Lấy dữ liệu từ API
+        axios.get('https://tiki.vn/api/personalish/v1/blocks/listings?limit=40&include=advertisement&aggregations=2&version=home-persionalized&trackity_id=d0530578-7ece-da7b-2106-443a88581bdd&category=7358&page=1&urlKey=light-novel')
+          .then(response => {
+            const data = response.data; // Dữ liệu từ API
+
+            // In ra dữ liệu từ API
+            console.log('Dữ liệu từ API:');
+            console.log(data);
+          })
+          .catch(error => {
+            console.error('Lỗi khi lấy dữ liệu từ API:', error);
+          });
+    </script>
+</body>
+</html>

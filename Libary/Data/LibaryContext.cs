@@ -87,13 +87,12 @@ public partial class LibaryContext : DbContext
             entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.Content)
-                .HasMaxLength(500)
+                .HasMaxLength(1000)
                 .HasColumnName("content");
             entity.Property(e => e.NumberBook).HasColumnName("numberBook");
             entity.Property(e => e.PictureBook)
-                .HasMaxLength(150)
+                .HasMaxLength(300)
                 .HasColumnName("pictureBook");
-            entity.Property(e => e.PublicationYear).HasColumnType("datetime");
             entity.Property(e => e.Title).HasMaxLength(255);
 
             entity.HasOne(d => d.Author).WithMany(p => p.Books)

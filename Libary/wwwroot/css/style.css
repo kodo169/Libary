@@ -129,9 +129,9 @@
 }
 
 .navbar .navbar-nav .nav-link:hover,
-.navbar .navbar-nav .nav-link.active,
+.navbar .navbar-nav .nav-link.act,
 .fixed-top.bg-white .navbar .navbar-nav .nav-link:hover,
-.fixed-top.bg-white .navbar .navbar-nav .nav-link.active {
+.fixed-top.bg-white .navbar .navbar-nav .nav-link.act {
     color: var(--bs-primary);
 }
 
@@ -277,11 +277,11 @@
 
 
 /*** Fruits Start ***/
-.fruite .tab-class .nav-item a.active {
+.fruite .tab-class .nav-item a.act {
     background: var(--bs-secondary) !important;
 }
 
-.fruite .tab-class .nav-item a.active span {
+.fruite .tab-class .nav-item a.act span {
     color: var(--bs-white) !important; 
 }
 
@@ -450,30 +450,50 @@
 }
 /*** testimonial End ***/
 
-
+.owl-dots{
+    display: none;
+    height:0px;
+    width:0px;
+}
 /*** Single Page Start ***/
 .pagination {
-    display: inline-block;
+    display: flex !important;
 }
-  
-.pagination a {
+.active {
+    margin-top: -10px;
+}
+.active span {
+    border-radius: 10px;
     color: var(--bs-dark);
     padding: 10px 16px;
     text-decoration: none;
     transition: 0.5s;
     border: 1px solid var(--bs-secondary);
     margin: 0 4px;
+    border-radius: 10px;
+
 }
+.pagination a   {
+    border-radius: 10px;
+    color: var(--bs-dark);
+    padding: 10px 16px;
+    text-decoration: none;
+    transition: 0.5s;
+    border: 1px solid var(--bs-secondary);
+    margin: 0 4px;
+    border-radius: 10px;
+}
+
   
-.pagination a.active {
+.pagination a.act {
     background-color: var(--bs-primary);
     color: var(--bs-light);
     border: 1px solid var(--bs-secondary);
 }
   
-.pagination a:hover:not(.active) {background-color: var(--bs-primary)}
+.pagination a:hover:not(.act) {background-color: var(--bs-primary)}
 
-.nav.nav-tabs .nav-link.active {
+.nav.nav-tabs .nav-link.act {
     border-bottom: 2px solid var(--bs-secondary) !important;
 }
 /*** Single Page End ***/

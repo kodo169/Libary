@@ -1,0 +1,22 @@
+﻿@* @model IEnumerable<Libary.ViewModels.listBook_ViewModels> *@
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Libary.ViewModels.listBook_ViewModels>
+@{
+    Layout = "_ListBook";
+}
+@await Html.PartialAsync("bookitem", Model)
+@{
+    string query =" ";
+    foreach(var item in Model)
+    {   if(item.querySearch != null)
+        {
+            query = item.querySearch;
+            break;
+        }
+    }
+}
+<div class="col-12 ">
+    <div class="pagination d-flex justify-content-center mt-5" ">
+    @Html.PagedListPager(Model, page => Url.Action("searchs", new { page = page, query= query}))
+    </div>
+</div>
