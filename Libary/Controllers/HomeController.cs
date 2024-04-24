@@ -1,21 +1,24 @@
-using Libary.Models;
+using Libary.Data;
+using Libary.ViewComponents;
+using Libary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
+using X.PagedList;
 
 namespace Libary.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly LibaryContext _data;
+        public HomeController(LibaryContext data)
         {
-            _logger = logger;
+            _data = data;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? page)
         {
-            return View();
+            return Redirect("/mainIndex");
         }
         [Route("/404")]
         public IActionResult notFound()
@@ -27,10 +30,10 @@ namespace Libary.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
     }
 }

@@ -6,6 +6,6 @@
 @await Html.PartialAsync("bookitem", Model)
 <div class="col-12 ">
     <div class="pagination d-flex justify-content-center mt-5"">
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
     </div>
 </div>

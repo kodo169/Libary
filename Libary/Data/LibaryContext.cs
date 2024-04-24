@@ -47,6 +47,8 @@ public partial class LibaryContext : DbContext
             entity.ToTable("bill");
 
             entity.Property(e => e.Idbill).HasColumnName("idbill");
+            entity.Property(e => e.StandbyStatus).HasColumnName("standby_Status");
+            entity.Property(e => e.StatusDpne).HasColumnName("Status_Dpne");
         });
 
         modelBuilder.Entity<BillInfo>(entity =>

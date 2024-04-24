@@ -1,0 +1,19 @@
+﻿<div class="main">
+    <h1>Management Libary</h1>
+    <h3>Forgot Account</h3>
+    <form asp-controller="Login" asp-action="sendMail">
+        <label for="first">
+            Username:
+        </label>
+        <input type="text"
+               id="first"
+               name="nameAccount"
+               placeholder="Enter your Username" required>
+        <label class="h1-notify">@TempData["Message"]</label>
+        <div class="wrap b">
+                <button class="button-login" type="submit">
+                    Send Mail
+                </button>
+        </div>
+    </form>
+</div>

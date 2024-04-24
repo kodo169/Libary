@@ -1,0 +1,43 @@
+﻿<body >
+    <div class="main">
+        <h1 class=".h1-login">Management Libary</h1>
+        <h3>Login</h3>
+        <form action="">
+            <label for="first">
+                Username:
+            </label>
+            <input type="text"
+                   id="first"
+                   name="first"
+                   placeholder="Enter your Username" required>
+
+            <label for="password">
+                Password:
+            </label>
+            <input type="password"
+                   id="password"
+                   name="password"
+                   placeholder="Enter your Password" required>
+
+            <div class="wrap b">
+                <button class="button-login" type="submit"
+                        onclick="solve()">
+                    Submit
+                </button>
+            </div>
+        </form>
+        <p>
+            <a asp-controller="Login" asp-action="forgotAccount"
+               style="text-decoration: none;">
+                Forgot Account
+            </a>
+        </p>
+        <div style="align-items: center;border-bottom: 1px solid #dadde1;display: flex;margin: 20px 16px;text-align: center;"></div>
+        <p>
+            <a asp-controller="listBook" asp-action="index" class="button-login" type="submit">
+                    Create an Account 
+            </a>
+
+        </p>
+    </div>
+</body>

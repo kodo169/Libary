@@ -13,5 +13,9 @@ public partial class Bill
 
     public DateOnly? ReturnDate { get; set; }
 
+    public bool? StandbyStatus { get; set; }
+
+    public bool? StatusDpne { get; set; }
+
     public virtual ICollection<BillInfo> BillInfos { get; set; } = new List<BillInfo>();
 }
