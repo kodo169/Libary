@@ -1,4 +1,3 @@
-
 /*** Spinner Start ***/
 #spinner {
     opacity: 0;
@@ -124,7 +123,6 @@
 }
 
 .navbar {
-    height: 100px;
     border-bottom: 1px solid rgba(255, 255, 255, .1);
 }
 
@@ -516,7 +514,7 @@
 /*** Footer End ***/
 
 /** Login Start**/
-.body-lable {
+/*.body-lable {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -578,10 +576,12 @@ input {
     justify-content: center;
     align-items: center;
 
-}
+}*/
 /** Login end**/
+/* latin-ext */
 .h1-notify {
     display: flex;
     font-size: 16px;
     color: red;
 }
+
