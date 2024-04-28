@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "Detail";
+    Layout = "_LayoutLogin";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -14,7 +18,7 @@
         <div class="box" style="">
             <div class="inner-box">
                 <div class="forms-wrap">
-                    <form action="index.html" autocomplete="off" class="sign-in-form">
+                    <form asp-action="SignIn" asp-controller="Login" autocomplete="off" class="sign-in-form">
                         <div class="logo">
                             <img src="./img/logo.png" alt="easyclass" />
                             <h4>easyclass</h4>
@@ -32,6 +36,7 @@
                                        minlength="4"
                                        class="input-field"
                                        autocomplete="off"
+                                       name="username"
                                        required />
                                 <label>Name</label>
                             </div>
@@ -41,10 +46,15 @@
                                        minlength="4"
                                        class="input-field"
                                        autocomplete="off"
+                                       name="password"
                                        required />
                                 <label>Password</label>
                             </div>
-
+                            <div>
+                                <h2 class="h1-notify" style="color: ActiveBorder;font-size: 12px;font-style: italic;margin-top: -20px; ">
+                                    @TempData["Message"]
+                                </h2>
+                            </div>
                             <input type="submit" value="Sign In" class="sign-btn" />
 
                             <p class="text">
@@ -53,7 +63,6 @@
                             </p>
                         </div>
                     </form>
-
                     <form action="index.html" autocomplete="off" class="sign-up-form">
                         <div class="logo">
                             <img src="~/img/logo.png" alt="easyclass" />

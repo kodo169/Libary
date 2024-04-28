@@ -11,10 +11,29 @@ namespace Libary.Controllers
         {
             _data = data;
         }
+        [Route("/indexLogin")]
         public IActionResult Index()
         {
             return View();
         }
+
+        public IActionResult SignIn(string? username, string? password)
+        {
+            var data = _data.Users.SingleOrDefault(p => p.Username == username && p.PasswordHash == password);
+            //if(username != null && password != null)
+            //{
+            //    data = data.Where(p => p.Username == username && p.PasswordHash == password);
+            //}
+            if(data == null) 
+            {
+                TempData["Message"] = "Name Account or Password not correct!";
+                return Redirect("/indexLogin");
+            }
+
+            return Redirect("/mainIndex");
+
+        }
+
         [Route("/forgotAcc")]
         public IActionResult forgotAccount()
         {
