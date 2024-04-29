@@ -2,6 +2,7 @@
 using MailKit;
 using MimeKit;
 using Libary.Data;
+using Libary.ViewModels;
 namespace Libary.Controllers
 {
     public class LoginController : Controller
@@ -19,17 +20,21 @@ namespace Libary.Controllers
 
         public IActionResult SignIn(string? username, string? password)
         {
-            var data = _data.Users.SingleOrDefault(p => p.Username == username && p.PasswordHash == password);
-            //if(username != null && password != null)
-            //{
-            //    data = data.Where(p => p.Username == username && p.PasswordHash == password);
-            //}
-            if(data == null) 
+            var data = _data.Users.Where(p => p.Username == username && p.PasswordHash == password);
+            var result = data.Select(p => new DataUser_ViewModels
+            {
+                id = p.UserId,
+                nameAcc =p.Username,
+                email =p.Email,
+                role =p.Role,
+                name =p.Name,
+            }).ToList();
+            if (result.Count == 0) 
             {
                 TempData["Message"] = "Name Account or Password not correct!";
                 return Redirect("/indexLogin");
             }
-
+            Global.check_login = true;
             return Redirect("/mainIndex");
 
         }
@@ -98,6 +103,12 @@ namespace Libary.Controllers
         public IActionResult changePass() 
         {
             return View();
+        }
+
+        public IActionResult logout()
+        {
+            Global.check_login = false;
+            return Redirect("/mainIndex");
         }
     }
 }
