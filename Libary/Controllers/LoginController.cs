@@ -51,12 +51,12 @@ namespace Libary.Controllers
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             return new string(Enumerable.Repeat(chars, 6).Select(s => s[random.Next(s.Length)]).ToArray());
         }
-        public IActionResult sendMail(string? nameAccount)
+        public IActionResult sendMail(string? queryEmail)
         {
-            var data = _data.Users.SingleOrDefault(x => x.Username == nameAccount);
+            var data = _data.Users.SingleOrDefault(x => x.Email == queryEmail);
             if(data == null) 
             {
-                TempData["Message"] = "Name Account or Email not correct!";
+                TempData["Message"] = "Email not correct!";
                 return Redirect("/forgotAcc");
             }
             var email = new MimeMessage();

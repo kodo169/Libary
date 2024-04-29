@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<Libary.ViewModels.DataUser_ViewModels>
 @{
-    string name = null;
+    string name = "";
     foreach(var item in Model)
     {
+        if (item.name == null) break;
         name = item.name;
     }
 }
