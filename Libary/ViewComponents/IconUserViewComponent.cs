@@ -7,14 +7,23 @@ namespace Libary.ViewComponents
 {
     public class IconUserViewComponent : ViewComponent
     {
-        private readonly LibaryContext _context;
-        public IconUserViewComponent(LibaryContext context)
+        private readonly LibaryContext _data;
+        public IconUserViewComponent(LibaryContext data)
         {
-            _context = context;
+            _data = data;
         }
         public IViewComponentResult Invoke()
         {
-            return View();
+            var data = _data.Users.Where(p => p.UserId == Global.id_User);
+            var result = data.Select(p => new DataUser_ViewModels
+            {
+                id = p.UserId,
+                nameAcc = p.Username,
+                email = p.Email,
+                role = p.Role,
+                name = p.Name,
+            }).ToList();
+            return View(result);
         }
     }
 }

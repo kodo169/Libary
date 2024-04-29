@@ -169,9 +169,9 @@ label {
     transition: 0.3s;
 }
 
-    .sign-btn:hover {
+.sign-btn:hover {
         background-color: #8371fd;
-    }
+}
 
 .text {
     color: #bbb;

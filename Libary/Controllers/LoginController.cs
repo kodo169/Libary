@@ -34,6 +34,7 @@ namespace Libary.Controllers
                 TempData["Message"] = "Name Account or Password not correct!";
                 return Redirect("/indexLogin");
             }
+            Global.id_User = result[0].id;
             Global.check_login = true;
             return Redirect("/mainIndex");
 
@@ -50,13 +51,12 @@ namespace Libary.Controllers
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             return new string(Enumerable.Repeat(chars, 6).Select(s => s[random.Next(s.Length)]).ToArray());
         }
-        public static string codeConfirm ;
         public IActionResult sendMail(string? nameAccount)
         {
             var data = _data.Users.SingleOrDefault(x => x.Username == nameAccount);
             if(data == null) 
             {
-                TempData["Message"] = "Name Account not correct!";
+                TempData["Message"] = "Name Account or Email not correct!";
                 return Redirect("/forgotAcc");
             }
             var email = new MimeMessage();
@@ -64,7 +64,7 @@ namespace Libary.Controllers
             email.From.Add(new MailboxAddress("Nguyên Vũ", "huynhnguyenvu@dtu.edu.vn"));
             email.To.Add(new MailboxAddress($"{data.Name}", $"{data.Email}"));
             email.Subject = "Forgot Password";
-            codeConfirm = RandomString();
+            Global.codeConfirm  = RandomString();
             string htmlBody = $@"
             <html>
                 <head>
@@ -81,7 +81,7 @@ namespace Libary.Controllers
                 </head>
                 <body>
                     <div class='container-mail'>
-                        <p>Your code confirm is: <span class='code'>{codeConfirm}</span></p>
+                        <p>Your code confirm is: <span class='code'>{Global.codeConfirm}</span></p>
                     </div>
                 </body>
             </html>";
@@ -97,14 +97,62 @@ namespace Libary.Controllers
                 smtp.Send(email);
                 smtp.Disconnect(true);
             }
-            return View();
+            Global.id_User= data.UserId;
+            return Redirect("/confirmCode");
         }
-
-        public IActionResult changePass() 
+        [Route("/confirmCode")]
+        public IActionResult confirmCodeForgot(string? _codeConfirm)
         {
-            return View();
+            if(_codeConfirm == null)
+            {
+                return View();
+            }
+            if(_codeConfirm == Global.codeConfirm)
+            {
+                Global.codeConfirm = null;
+                return Redirect("/ChangePass");
+            }
+            else
+            {
+                TempData["Message"] = "Code Confirm not correct!";
+                return View();
+            }
         }
-
+        [Route("/ChangePass")]
+        public IActionResult changePass(string? pass, string? confirmPass) 
+        {
+            if(pass == null)
+            {
+                return View();
+            }
+            if(pass != confirmPass)
+            {
+                TempData["Message"] = "Confirm Password not same Your Password!";
+                return Redirect("/ChangePass");
+            }
+            if(pass == confirmPass)
+            {
+                var data = _data.Users.SingleOrDefault(x => x.UserId == Global.id_User);
+                data.PasswordHash = pass;
+                _data.SaveChanges();
+            }
+            return Redirect("/SignInWhenChangePass");
+        }
+        [Route("/SignInWhenChangePass")]
+        public IActionResult SignInWhenChangePass() 
+        {
+            Global.check_login = true;
+            var data = _data.Users.Where(x => x.UserId == Global.id_User);
+            var result = data.Select(p => new DataUser_ViewModels
+            {
+                id = p.UserId,
+                nameAcc = p.Username,
+                email = p.Email,
+                role = p.Role,
+                name = p.Name,
+            }).ToList();
+            return Redirect("/mainIndex");
+        }
         public IActionResult logout()
         {
             Global.check_login = false;

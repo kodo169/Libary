@@ -1,4 +1,12 @@
-﻿@if(Libary.ViewModels.Global.check_login == false) 
+﻿@model IEnumerable<Libary.ViewModels.DataUser_ViewModels>
+@{
+    string name = null;
+    foreach(var item in Model)
+    {
+        name = item.name;
+    }
+}
+@if(Libary.ViewModels.Global.check_login == false) 
 {
     <a asp-action="Index" asp-controller="Login" class="my-auto">
         <i class="fas fa-user fa-2x"></i>
@@ -8,12 +16,12 @@
 else
 {
     <div class="nav-item dropdown">
-        <label href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" ><i class="fas fa-user fa-2x"></i> Hi, Kodo</label>
+        <label href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user fa-2x"></i>@name.ToString()</label>
         <div class="dropdown-menu m-0 bg-secondary rounded-0">
             <a class="dropdown-item">
                 Information Account
             </a>
-            <a class="dropdown-item">
+            <a asp-action="changePass" asp-controller="Login" class="dropdown-item">
                 Change Password
             </a>
             <a asp-action="logout"  asp-controller="Login" class="dropdown-item">
