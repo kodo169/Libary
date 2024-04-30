@@ -1,4 +1,5 @@
 ﻿using Libary.Data;
+using Libary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Libary.Controllers
@@ -12,6 +13,11 @@ namespace Libary.Controllers
         }
         public IActionResult Index()
         {
+            
+            if(Global.role == false)
+            {
+                return Redirect("/mainIndex");
+            }
             return View();
         }
     }

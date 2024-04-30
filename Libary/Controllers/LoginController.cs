@@ -36,6 +36,7 @@ namespace Libary.Controllers
             }
             Global.id_User = result[0].id;
             Global.check_login = true;
+            Global.role = result[0].role;
             return Redirect("/mainIndex");
 
         }
@@ -151,11 +152,13 @@ namespace Libary.Controllers
                 role = p.Role,
                 name = p.Name,
             }).ToList();
+            Global.role= result[0].role;
             return Redirect("/mainIndex");
         }
         public IActionResult logout()
         {
             Global.check_login = false;
+            Global.role = false;
             return Redirect("/mainIndex");
         }
     }
