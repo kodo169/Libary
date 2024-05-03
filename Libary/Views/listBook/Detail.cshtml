@@ -25,7 +25,13 @@
                                 </a>
                         </div>
                         </nav>
-                            <p class="fw-bold mb-3">Author: @Model.nameAuthor</p>
+                        <nav class="navbar navbar-light bg-white ">
+                            <div class="navbar-nav">
+                                <a asp-action="searchs" asp-controller="listBook" asp-route-query="@Model.nameAuthor" style="color:#747d88;">
+                            <p class="fw-bold mb-3 nav-link" style="padding:0px;">Author: @Model.nameAuthor</p>
+                        </a>
+                            </div>
+                        </nav>
                             <p class="fw-bold mb-3">Publication Year: @Model.PublicationYearBook</p>
                             <h5 class="fw-bold mb-3">Inventory : @Model.numberBook</h5>
                             <p class="mb-4">@Model.contentBook</p>
@@ -47,13 +53,13 @@
                     </div>
                 </div>  
             </div>
-            <h1 class="fw-bold mb-0">Related products</h1>
-            <div class="vesitable">
-            <div class="owl-carousel vegetable-carousel justify-content-center">
-                    @await Component.InvokeAsync("Related",  @Model.nameAuthor)
-                </div>
-            </div>
         </div>
+    <h1 class="fw-bold mb-0">Related products</h1>
+    <div class="vesitable">
+        <div class="owl-carousel vegetable-carousel justify-content-center">
+            @await Component.InvokeAsync("Related", @Model.nameAuthor)
+        </div>
+    </div>
     </div>
 
 <!-- Single Product End -->

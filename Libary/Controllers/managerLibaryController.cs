@@ -13,8 +13,8 @@ namespace Libary.Controllers
         }
         public IActionResult Index()
         {
-            
-            if(Global.role == false)
+
+            if (Global.role == false)
             {
                 return Redirect("/mainIndex");
             }

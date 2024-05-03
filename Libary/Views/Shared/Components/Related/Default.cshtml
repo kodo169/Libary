@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Libary.ViewModels.relatedProduct_ViewModels>
 @foreach (var item in Model)
 {
-    <div class="border rounded position-relative vesitable-item" >
+    <div class="border rounded position-relative vesitable-item col-9">
         <div class="vesitable-img">
             <a asp-action="Detail" asp-controller="listBook" asp-route-id="@item.idBook">
             <img src="@item.picturebook" class="img-fluid w-100 rounded-top" alt="">
