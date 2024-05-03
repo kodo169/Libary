@@ -67,7 +67,7 @@ namespace Libary.Controllers
             var listbook = _data.Books.Include(p => p.Author).AsQueryable();
             if (query != null)
             {
-                listbook = listbook.Where(p => p.Title.Contains(query) || p.Author.Name.Contains(query));
+                listbook = listbook.Where(p => p.Title.Contains(query) || p.Author.Name.Contains(query) || p.BookId.ToString().Contains(query));
             }
             var result = listbook.Select(p => new listBook_ViewModels
             {
