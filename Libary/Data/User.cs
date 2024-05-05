@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Libary.Data;
 
-namespace Libary.Data;
+namespace Libary;
 
 public partial class User
 {
@@ -15,7 +16,9 @@ public partial class User
 
     public string Email { get; set; } = null!;
 
-    public bool Role { get; set; }
+    public int RoleId { get; set; }
 
     public virtual ICollection<BillInfo> BillInfos { get; set; } = new List<BillInfo>();
+
+    public virtual Role? Role { get; set; }
 }

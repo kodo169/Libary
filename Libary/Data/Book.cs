@@ -21,6 +21,8 @@ public partial class Book
 
     public int CategoryId { get; set; }
 
+    public int? Price { get; set; }
+
     public virtual Author Author { get; set; } = null!;
 
     public virtual ICollection<BillInfo> BillInfos { get; set; } = new List<BillInfo>();

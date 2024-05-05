@@ -26,7 +26,7 @@ namespace Libary.Controllers
                 id = p.UserId,
                 nameAcc =p.Username,
                 email =p.Email,
-                role =p.Role,
+                //role =p.Role,
                 name =p.Name,
             }).ToList();
             if (result.Count == 0) 
@@ -149,7 +149,7 @@ namespace Libary.Controllers
                 id = p.UserId,
                 nameAcc = p.Username,
                 email = p.Email,
-                role = p.Role,
+                //role = p.Role,
                 name = p.Name,
             }).ToList();
             Global.role= result[0].role;

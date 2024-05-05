@@ -18,7 +18,7 @@ namespace Libary.Controllers
         [Route("/mainIndex")]
         public IActionResult Index(int? page)
         {
-            int pageSize = 6;
+            int pageSize = 5;
             int pageNumber  = page == null || page < 0 ? 1 : page.Value;
             var listBook = _data.Books.AsQueryable();
 
@@ -62,7 +62,7 @@ namespace Libary.Controllers
         }
         public IActionResult searchs(string? query, int? page)
         {
-            int pageSize = 6;
+            int pageSize = 5;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
             var listbook = _data.Books.Include(p => p.Author).AsQueryable();
             if (query != null)
