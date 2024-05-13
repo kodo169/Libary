@@ -5,7 +5,7 @@
 @model X.PagedList.IPagedList<Libary.ViewModels.listBook_ViewModels>
 @await Html.PartialAsync("bookitem", Model)
 <div class="col-12 ">
-    <div class="pagination d-flex justify-content-center mt-5 " style="height:500px">
+    <div class="pagination d-flex justify-content-center mt-5 " @* style="height:500px" *@>
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
     </div>
 </div>

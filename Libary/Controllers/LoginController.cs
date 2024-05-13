@@ -3,6 +3,7 @@ using MailKit;
 using MimeKit;
 using Libary.Data;
 using Libary.ViewModels;
+using Microsoft.EntityFrameworkCore;
 namespace Libary.Controllers
 {
     public class LoginController : Controller
@@ -20,23 +21,34 @@ namespace Libary.Controllers
 
         public IActionResult SignIn(string? username, string? password)
         {
-            var data = _data.Users.Where(p => p.Username == username && p.PasswordHash == password);
-            var result = data.Select(p => new DataUser_ViewModels
+            var data = _data.Users.Where(p => p.Username == username && p.PasswordHash == password).Select(p => new DataUser_ViewModels
             {
                 id = p.UserId,
                 nameAcc =p.Username,
                 email =p.Email,
-                //role =p.Role,
+                roleID =p.RoleId,
                 name =p.Name,
             }).ToList();
-            if (result.Count == 0) 
+            if (data.Count == 0)
             {
                 TempData["Message"] = "Name Account or Password not correct!";
                 return Redirect("/indexLogin");
             }
-            Global.id_User = result[0].id;
+            if (data[0].roleID == 1)
+            {
+                Global.role = true;
+            }
+            //var result = _data.RolePermissions.Include(p => p.Role).Include(p=>p.Permission)
+            //    .Where(rp => rp.PermissionId == 1 && rp.RoleId == data[0].roleID)
+            //    .FirstOrDefault();
+            //if (result == null)
+            //{
+            //    TempData["Message"] = "Name Account or Password not correct!";
+            //    return Redirect("/indexLogin");
+            //}
+            Global.id_User = data[0].id;
             Global.check_login = true;
-            Global.role = result[0].role;
+
             return Redirect("/mainIndex");
 
         }
@@ -122,9 +134,10 @@ namespace Libary.Controllers
         [Route("/ChangePass")]
         public IActionResult changePass(string? pass, string? confirmPass) 
         {
-            if(pass == null)
+            if (pass == null || confirmPass == null)
             {
-                return View();
+                TempData["Message"] = "Confirm Password not same Your Password!";
+                return Redirect("/ChangePass");
             }
             if(pass != confirmPass)
             {
@@ -134,6 +147,11 @@ namespace Libary.Controllers
             if(pass == confirmPass)
             {
                 var data = _data.Users.SingleOrDefault(x => x.UserId == Global.id_User);
+                if (data == null)
+                {
+                    TempData["Message"] = "Confirm Password not same Your Password!";
+                    return Redirect("/ChangePass");
+                }
                 data.PasswordHash = pass;
                 _data.SaveChanges();
             }
@@ -149,10 +167,13 @@ namespace Libary.Controllers
                 id = p.UserId,
                 nameAcc = p.Username,
                 email = p.Email,
-                //role = p.Role,
+                roleID = p.RoleId,
                 name = p.Name,
             }).ToList();
-            Global.role= result[0].role;
+            if (result[0].roleID == 1)
+            {
+                Global.role= true;
+            }
             return Redirect("/mainIndex");
         }
         public IActionResult logout()
