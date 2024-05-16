@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Libary.Data;
 
-namespace Libary;
+namespace Libary.Data;
 
 public partial class RolePermission
 {

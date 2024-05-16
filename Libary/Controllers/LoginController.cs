@@ -38,14 +38,6 @@ namespace Libary.Controllers
             {
                 Global.role = true;
             }
-            //var result = _data.RolePermissions.Include(p => p.Role).Include(p=>p.Permission)
-            //    .Where(rp => rp.PermissionId == 1 && rp.RoleId == data[0].roleID)
-            //    .FirstOrDefault();
-            //if (result == null)
-            //{
-            //    TempData["Message"] = "Name Account or Password not correct!";
-            //    return Redirect("/indexLogin");
-            //}
             Global.id_User = data[0].id;
             Global.check_login = true;
 

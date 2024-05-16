@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Libary.ViewModels.newImportedBook>
+<div class="col-sm-12 col-xl-6">
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">New Imported Book</h6>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Book ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Release date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.BookId</th>
+                        <td>@item.Title</td>
+                        <td>@item.amount</td>
+                        <td>@item.Price</td>
+                        <td>@item.DateCreate.ToString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
