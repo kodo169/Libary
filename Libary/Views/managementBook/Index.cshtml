@@ -1,8 +1,65 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "_LayoutLibarian";
 }
+@model IEnumerable<Libary.ViewModels.informationProducts_ViewModels>
+<div class="container-fluid pt-0 px-5">
+    <div class="bg-light rounded h-100 p-4">
+@*         <form method="post" action="/managerPersonal/actionAddEmployee"> *@
+            <div class="d-flex justify-content-end">
+            <a asp-controller="EditBook" asp-action="addBook" class=" btn-mb btn">Add</a>
+           </div>
+           <div class="col-12">
+               <div class="row">
+                   <div class="mb-3  col-md-4">
+                   <input type="text" class="form-control" placeholder="Name Book" name="queryNameBook" value="">
+                   </div>
+                   <div class="mb-3  col-md-4">
+                   <input type="datetime" class="form-control" placeholder="Category" name="queryNameCategory">
+                   </div>
+                   <div class="mb-3  col-md-4">
+                   <input type="number" class="form-control" placeholder="Author" name="Author" value="">
+                   </div>
+               </div>
 
-<h1>Index</h1>
+                <div class="col-sm-12 col-xl-12">
+                    <div class="bg-light rounded h-100 p-4">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Book ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Publication Year Book</th>
+                                    <th scope="col">Categories</th>
+                                    <th scope="col">Author</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@item.idBook</th>
+                                    <td>@item.nameBook</td>
+                                    <td>@item.PublicationYearBook</td>
+                                    <td>@item.nameCategory</td>
+                                    <td>@item.nameAuthor</td>
+                                    <td>@item.numberBook</td>
+                                    <td>@item.price</td>
+                                    <td>
+                                        <i class="bi bi-pencil" style="padding-right:10px;"></i
+                                        ><i class="bi bi-trash"></i>
+                                    </td>
 
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+           </div>
+@*         </form> *@
+    </div>
+</div>
