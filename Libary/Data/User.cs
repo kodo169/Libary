@@ -15,7 +15,9 @@ public partial class User
 
     public string Email { get; set; } = null!;
 
-    public bool Role { get; set; }
+    public int RoleId { get; set; }
 
     public virtual ICollection<BillInfo> BillInfos { get; set; } = new List<BillInfo>();
+
+    public virtual Role Role { get; set; } = null!;
 }

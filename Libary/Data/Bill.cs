@@ -15,7 +15,7 @@ public partial class Bill
 
     public bool? StandbyStatus { get; set; }
 
-    public bool? StatusDpne { get; set; }
+    public bool? StatusDone { get; set; }
 
     public virtual ICollection<BillInfo> BillInfos { get; set; } = new List<BillInfo>();
 }

@@ -18,7 +18,7 @@ namespace Libary.Controllers
         [Route("/mainIndex")]
         public IActionResult Index(int? page)
         {
-            int pageSize = 6;
+            int pageSize = 5;
             int pageNumber  = page == null || page < 0 ? 1 : page.Value;
             var listBook = _data.Books.AsQueryable();
 
@@ -62,12 +62,12 @@ namespace Libary.Controllers
         }
         public IActionResult searchs(string? query, int? page)
         {
-            int pageSize = 6;
+            int pageSize = 5;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
             var listbook = _data.Books.Include(p => p.Author).AsQueryable();
             if (query != null)
             {
-                listbook = listbook.Where(p => p.Title.Contains(query) || p.Author.Name.Contains(query));
+                listbook = listbook.Where(p => p.Title.Contains(query) || p.Author.Name.Contains(query) || p.BookId.ToString().Contains(query));
             }
             var result = listbook.Select(p => new listBook_ViewModels
             {

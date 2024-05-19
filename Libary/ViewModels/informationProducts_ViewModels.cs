@@ -10,6 +10,6 @@
         public DateOnly? PublicationYearBook { get; set; }
         public string? nameAuthor {  get; set; }
         public string? nameCategory { get; set;}
-
+        public int? price { get; set; }
     }
 }

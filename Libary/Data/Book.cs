@@ -9,7 +9,7 @@ public partial class Book
 
     public string Title { get; set; } = null!;
 
-    public string? Content { get; set; }
+    public string Content { get; set; } = null!;
 
     public DateOnly? PublicationYear { get; set; }
 
@@ -20,6 +20,10 @@ public partial class Book
     public int AuthorId { get; set; }
 
     public int CategoryId { get; set; }
+
+    public int? Price { get; set; }
+
+    public DateOnly? DateCreate { get; set; }
 
     public virtual Author Author { get; set; } = null!;
 

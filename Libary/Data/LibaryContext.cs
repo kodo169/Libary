@@ -25,6 +25,12 @@ public partial class LibaryContext : DbContext
 
     public virtual DbSet<Category> Categories { get; set; }
 
+    public virtual DbSet<Permission> Permissions { get; set; }
+
+    public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<RolePermission> RolePermissions { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -48,7 +54,7 @@ public partial class LibaryContext : DbContext
 
             entity.Property(e => e.Idbill).HasColumnName("idbill");
             entity.Property(e => e.StandbyStatus).HasColumnName("standby_Status");
-            entity.Property(e => e.StatusDpne).HasColumnName("Status_Dpne");
+            entity.Property(e => e.StatusDone).HasColumnName("Status_Done");
         });
 
         modelBuilder.Entity<BillInfo>(entity =>
@@ -116,6 +122,43 @@ public partial class LibaryContext : DbContext
             entity.Property(e => e.CategoryName).HasMaxLength(100);
         });
 
+        modelBuilder.Entity<Permission>(entity =>
+        {
+            entity.Property(e => e.PermissionId).ValueGeneratedNever();
+            entity.Property(e => e.PermissionName).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.ToTable("Role");
+
+            entity.Property(e => e.RoleId)
+                .ValueGeneratedNever()
+                .HasColumnName("RoleID");
+            entity.Property(e => e.RoleName).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<RolePermission>(entity =>
+        {
+            entity.ToTable("Role_Permissions");
+
+            entity.Property(e => e.RolePermissionId)
+                .ValueGeneratedNever()
+                .HasColumnName("Role_Permission_ID");
+            entity.Property(e => e.PermissionId).HasColumnName("PermissionID");
+            entity.Property(e => e.RoleId).HasColumnName("RoleID");
+
+            entity.HasOne(d => d.Permission).WithMany(p => p.RolePermissions)
+                .HasForeignKey(d => d.PermissionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Role_Permissions_Permissions");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.RolePermissions)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Role_Permissions_Role");
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCAC58DFFF74");
@@ -130,7 +173,13 @@ public partial class LibaryContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("name");
             entity.Property(e => e.PasswordHash).HasMaxLength(255);
+            entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.Username).HasMaxLength(50);
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Users)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Users_Role");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -20,7 +20,7 @@ namespace Libary.ViewComponents
                 id = p.UserId,
                 nameAcc = p.Username,
                 email = p.Email,
-                role = p.Role,
+                roleID = p.RoleId,
                 name = p.Name,
             }).ToList();
             return View(result);
