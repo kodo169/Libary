@@ -302,7 +302,7 @@
 .fruite .fruite-categorie .fruite-name a:hover {
     color: var(--bs-secondary);
 }
-
+    
 .fruite .fruite-item {
     height: 100%;
     transition: 0.5s;
