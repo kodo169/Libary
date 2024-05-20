@@ -26,21 +26,12 @@
 }
 /*** Spinner End ***/
 
-
 /*** Button Start ***/
 .btn {
     font-weight: 600;
     transition: .5s;
 }
-.btn-mb {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #81c408;
-    color: black;
-    padding: 0 100px;
-    margin-bottom: 20px;
-}
+
 .btn-square {
     width: 32px;
     height: 32px;

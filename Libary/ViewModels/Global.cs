@@ -6,5 +6,6 @@
         public static bool check_login = false;
         public static int? id_User;
         public static bool role = false;
+        public static string namePictute = "";
     }
 }
