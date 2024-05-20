@@ -2,7 +2,6 @@
 using Libary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 namespace Libary.Controllers
 {
     public class managementBookController : Controller
@@ -12,6 +11,7 @@ namespace Libary.Controllers
         {
             _data = data;
         }
+        [Route("/inforBook")]
         public IActionResult Index()
         {
             var data = _data.Books
@@ -35,5 +35,11 @@ namespace Libary.Controllers
             }
             return View(result);
         }
+        public IActionResult addBook()
+        {
+
+            return View();
+        }
+
     }
 }
