@@ -5,7 +5,7 @@ namespace Libary.Data;
 
 public partial class Bill
 {
-    public int Idbill { get; set; }
+    public string Idbill { get; set; }
 
     public DateOnly LoanDate { get; set; }
 

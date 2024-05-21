@@ -20,6 +20,12 @@
                                 Reader Violated
                             </a>
                         }
+                        if (item.checkRole == 2)
+                        {
+                            <a asp-controller="ListWaitingRental" asp-action="Index" asp-route-category="" class="dropdown-item">
+                                Rental Waiting List
+                            </a>
+                        }
                     }
                 </div>
             </div>
