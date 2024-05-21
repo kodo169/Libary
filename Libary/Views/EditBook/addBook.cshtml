@@ -1,7 +1,92 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "addBook";
+    Layout = "_LayoutLibarian";
 }
+@model Libary.ViewModels.addBook
+<div class="container-fluid pt-0 px-5">
+    <div class="bg-light rounded h-100 p-4">
+            <div class="col-12">
+                <div class="row">
+                    <label class="form-label">Picture</label>
+                    <div class="col-md-4">
+                        <div id="imageContainer" class="row" style="margin-bottom:25px;">
+                            @if (@Libary.ViewModels.Global.namePictute == "") { }
+                            else
+                            {
+                                <img src="~/img/@Libary.ViewModels.Global.namePictute" class="img-fluid rounded" style="height:200px; width:200px;" />
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        @using (Html.BeginForm("addPictureBook", "EditBook", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="form-group">
+                                <label>Upload File</label>
+                                <input type="file" class="form-control" name="file" value="" />
+                                @if (!string.IsNullOrEmpty(@Libary.ViewModels.Global.namePictute))
+                                {
+                                    <small class="form-text text-muted">Selected file: @Libary.ViewModels.Global.namePictute</small>
+                                }
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" style="margin:20px; margin-left:0px;">Upload Picture</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            
+     </div>
+    <form method="post" action="/EditBook/actionAddBook">
+            <div class="col-12">
+                <div class="row">
+                    <div class="mb-3  col-md-6">
+                        <label class="form-label">Name Book</label>
+                        <input type="text" class="form-control" name="Title" value="@Model.Title">
+                    </div>
+                    <div class="mb-3  col-md-6">
+                        <label class="form-label">Amount</label>
+                        <input type="number" class="form-control" name="amount" min="1" value="@Model.amount">
+                    </div>
+                </div>
+                <div class="row">
+@*                     làm category *@
+                    <div class="mb-3  col-md-6">
+                        <label class="form-label">Category</label>
+                        <input type="text" class="form-control" name="categoty" value="@Model.categoty">
+                    </div>
+                    <div class="mb-3  col-md-6">
+                        <label class="form-label">Price</label>
+                        <input type="number" class="form-control" name="price" min="1" value="@Model.price">
+                    </div>
+                </div>
+                <div class="row">
+@*                     làm author *@
+                    <div class="mb-3  col-md-6">
+                        <label class="form-label">Author</label>
+                        <input type="text" class="form-control"  name="author" value="@Model.author">
+                    </div>
+                    <div class="mb-3  col-md-6">
+                        <label class="form-label">Publication Year</label>
+                        <input type="date" class="form-control" name="PublicationYear" value="@Model.PublicationYear">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3  col-md-12">
+                        <label class="form-label">Description</label>
+                        <textarea type="text" class="form-control" name="Description" style="height:300px;" value="@Model.Description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary">Save Date</button>
+                </div>
+                <div class="col-2">
+                    <a asp-action="Cancel" asp-controller="EditBook" class="btn btn-primary">Cancel</a>
+                </div>
+            </div>
+    </form>
 
-<h1>addBook</h1>
-
+    </div>
+</div>
