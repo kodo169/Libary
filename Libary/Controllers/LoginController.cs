@@ -34,7 +34,7 @@ namespace Libary.Controllers
                 TempData["Message"] = "Name Account or Password not correct!";
                 return Redirect("/indexLogin");
             }
-            if (data[0].roleID == 1)
+            if (data[0].roleID == 3)
             {
                 Global.role = true;
             }
