@@ -66,6 +66,7 @@ namespace Libary.Controllers
                 // Cập nhật thuộc tính StandbyStatus và StatusDone
                 billInfo.IdbillNavigation.StandbyStatus = false;
                 billInfo.IdbillNavigation.StatusDone = true;
+                billInfo.IdbillNavigation.ReturnDate = DateOnly.FromDateTime(DateTime.Now);
 
                 _dataSQLServer.SaveChanges();
             }
