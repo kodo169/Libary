@@ -7,7 +7,7 @@
         public int? countBook { get; set; }
         public int? UserID { get; set; }
         public DateOnly? LoanDate { get; set; }
-        public DateOnly? ReturnDate { get; set; }
+        public DateOnly? DueDate { get; set; }
         public bool? StandbyStatus { get; set; }
         public bool? StatusDone { get; set; }
         public int? price { get; set; }

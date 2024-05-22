@@ -2,7 +2,7 @@
     ViewData["Title"] = "Index";
     Layout = "_LayoutLibarian";
 }
-@model IEnumerable<Libary.ViewModels.ListWaitingRental_ViewModels>
+@model IEnumerable<Libary.ViewModels.ReaderViolatedViewModel>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -100,7 +100,7 @@
                 }
                 <div class="row mb-3">
                     <div class="col-md-6 d-flex align-items-center">
-                        <form method="get" action="@Url.Action("Index", "ListWaitingRental")" class="d-flex w-100">
+                        <form method="get" action="@Url.Action("Index", "ReaderViolated")" class="d-flex w-100">
                             <input type="text" class="form-control" placeholder="Search User Name" id="searchUserName" name="queryUserName">
                             <button type="submit" class="btn btn-primary ms-2">Search</button>
                         </form>
@@ -115,7 +115,6 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Loan Date</th>
                                     <th scope="col">Due Date</th>
                                     <th scope="col">Rental Code</th>
                                     <th scope="col">Amount</th>
@@ -126,24 +125,19 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <th scope="row">@item.UserID</th>
-                                        <td>@item.UserName</td>
+                                        <th scope="row">@item.userID</th>
+                                        <td>@item.name</td>
                                         <td>@item.Email</td>
-                                        <td>@item.LoanDate</td>
                                         <td>@item.DueDate</td>
-                                        <td>@item.RentalCode</td>
-                                        <td>@item.countBook</td>
+                                        <td>@item.idBill</td>
+                                        <td>@item.numberBookHire</td>
                                         <td>
                                             <div class="button-group">
                                                 <form asp-action="CheckBill" method="post">
-                                                    <input type="hidden" name="rentalCode" value="@item.RentalCode" />
+                                                    <input type="hidden" name="rentalCode" value="@item.idBill" />
                                                     <button type="submit" class="check-button"><i class="fas fa-check"></i></button>
                                                 </form>
-                                                <form asp-action="XBill" method="post">
-                                                    <input type="hidden" name="rentalCode" value="@item.RentalCode" />
-                                                    <button type="submit" class="X-button"><i class="fa-solid fa-xmark"></i></button>
-                                                </form>
-                                                <button class="detail-button" onclick="loadDetails('@item.RentalCode')">Detail</button>
+                                                <button class="detail-button" onclick="loadDetails('@item.idBill')">Detail</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -183,17 +177,17 @@
     <script>
         function loadDetails(billId) {
             // Gửi yêu cầu AJAX tới Controller để lấy thông tin sách
-            fetch(`/ListWaitingRental/GetBookDetails?billId=${billId}`)
+            fetch(`/ReaderViolated/GetBookDetails?billId=${billId}`)
                 .then(response => response.json())
                 .then(data => {
                     const detailsBody = document.getElementById('bookDetails');
                     detailsBody.innerHTML = '';
                     data.forEach(book => {
                         detailsBody.innerHTML += `<tr>
-                                                    <td>${book.title}</td>
-                                                    <td>${book.author}</td>
-                                                    <td>${book.quantity}</td>
-                                                </tr>`;
+                                                            <td>${book.title}</td>
+                                                            <td>${book.author}</td>
+                                                            <td>${book.quantity}</td>
+                                                        </tr>`;
                     });
                     new bootstrap.Modal(document.getElementById('detailsModal')).show();
                 });

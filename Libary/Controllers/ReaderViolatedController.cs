@@ -2,18 +2,18 @@
 using Libary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Libary.Controllers
 {
-    public class ListWaitingRentalController : Controller
+    public class ReaderViolatedController : Controller
     {
         private readonly LibaryContext _dataSQLServer;
-        public ListWaitingRentalController(LibaryContext dataSQLServer)
+        public ReaderViolatedController(LibaryContext dataSQLServer)
         {
             _dataSQLServer = dataSQLServer;
         }
 
-        [HttpGet]
         public IActionResult Index(string queryUserName = "")
         {
             // Xây dựng truy vấn cơ bản bao gồm các điều kiện cố định
@@ -21,7 +21,7 @@ namespace Libary.Controllers
                 .Include(bi => bi.IdbillNavigation)
                 .Include(b => b.User)
                 .Include(bi => bi.Book)
-                .Where(bi => (!bi.IdbillNavigation.StandbyStatus.HasValue || bi.IdbillNavigation.StandbyStatus == false)
+                .Where(bi => (!bi.IdbillNavigation.StandbyStatus.HasValue || bi.IdbillNavigation.StandbyStatus == true)
                              && (!bi.IdbillNavigation.StatusDone.HasValue || bi.IdbillNavigation.StatusDone == false));
 
             // Áp dụng bộ lọc tìm kiếm nếu có
@@ -31,46 +31,52 @@ namespace Libary.Controllers
             }
 
             var data = query.ToList();
-            var result = new List<ListWaitingRental_ViewModels>();
+            var result = new List<ReaderViolatedViewModel>();
 
             // Duyệt qua danh sách kết quả truy vấn
             foreach (var item in data)
             {
-                var checkadd = true;
+                // Chuyển đổi DateOnly thành DateTime để so sánh
+                var dueDateTime = item.IdbillNavigation.DueDate.ToDateTime(TimeOnly.MinValue);
 
-                var addresult = new ListWaitingRental_ViewModels
+                // Chỉ thêm vào danh sách nếu DueDate nhỏ hơn ngày hiện tại
+                if (dueDateTime < DateTime.Now && !item.IdbillNavigation.ReturnDate.HasValue)
                 {
-                    idBook = item.BookId,
-                    nameBook = item.Book.Title,
-                    UserID = item.UserId,
-                    Email = item.User.Email,
-                    LoanDate = item.IdbillNavigation.LoanDate,
-                    DueDate = item.IdbillNavigation.DueDate,
-                    countBook = item.CountBook,
-                    UserName = item.User.Name,
-                    RentalCode = item.Idbill,
-                    StandbyStatus = item.IdbillNavigation.StandbyStatus,
-                    StatusDone = item.IdbillNavigation.StatusDone,
-                    price = item.Book.Price
-                };
+                    var checkadd = true;
 
-                // Kiểm tra xem kết quả đã tồn tại trong danh sách chưa
-                for (int i = 0; i < result.Count; i++)
-                {
-                    if (item.Idbill == result[i].RentalCode)
+                    var addresult = new ReaderViolatedViewModel
                     {
-                        result[i].countBook += item.CountBook ?? 0;
-                        checkadd = false;
-                        break;
-                    }
-                }
+                        userID = item.UserId,
+                        name = item.User.Name,
+                        DueDate = item.IdbillNavigation.DueDate.ToDateTime(TimeOnly.MinValue),
+                        numberBookHire = item.CountBook,
+                        idBill = item.Idbill,
+                        StandbyStatus = item.IdbillNavigation.StandbyStatus,
+                        StatusDone = item.IdbillNavigation.StatusDone,
+                        Email = item.User.Email,
+                        ReturnDate = item.IdbillNavigation.ReturnDate
+                    };
 
-                // Nếu chưa có trong danh sách, thêm mới
-                if (checkadd) result.Add(addresult);
+                    // Kiểm tra xem kết quả đã tồn tại trong danh sách chưa
+                    for (int i = 0; i < result.Count; i++)
+                    {
+                        if (item.Idbill == result[i].idBill)
+                        {
+                            result[i].numberBookHire += item.CountBook ?? 0;
+                            checkadd = false;
+                            break;
+                        }
+                    }
+
+                    // Nếu chưa có trong danh sách, thêm mới
+                    if (checkadd) result.Add(addresult);
+                }
             }
+
             return View(result);
         }
 
+        // Các phương thức khác
         [HttpPost]
         public async Task<IActionResult> CheckBill(string rentalCode)
         {
@@ -79,32 +85,8 @@ namespace Libary.Controllers
                 var bill = await _dataSQLServer.Bills.FirstOrDefaultAsync(b => b.Idbill == rentalCode);
                 if (bill != null)
                 {
-                    bill.StandbyStatus = true;
-                    await _dataSQLServer.SaveChangesAsync();
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "Bill not found.";
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = "Failed to update the bill status: " + ex.Message;
-            }
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> XBill(string rentalCode)
-        {
-            try
-            {
-                var bill = await _dataSQLServer.Bills.FirstOrDefaultAsync(b => b.Idbill == rentalCode);
-                if (bill != null)
-                {
-                    bill.StandbyStatus = false;
                     bill.StatusDone = true;
+                    bill.ReturnDate = DateOnly.FromDateTime(DateTime.Now);
                     await _dataSQLServer.SaveChangesAsync();
                 }
                 else
@@ -119,6 +101,7 @@ namespace Libary.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
 
         public IActionResult GetBookDetails(string billId)
         {
