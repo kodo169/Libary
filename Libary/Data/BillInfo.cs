@@ -11,7 +11,7 @@ public partial class BillInfo
 
     public int UserId { get; set; }
 
-    public int Idbill { get; set; }
+    public string Idbill { get; set; }
 
     public int? CountBook { get; set; }
 
