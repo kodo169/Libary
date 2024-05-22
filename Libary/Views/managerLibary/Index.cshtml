@@ -1,7 +1,23 @@
-﻿@{
+﻿@model IEnumerable<Libary.ViewModels.managerLibrary_ViewModels>
+
+@{
     ViewData["Title"] = "Manager Libarian";
     Layout = "_LayoutLibarian";
 }
+@{
+    int totalbooks = 0;
+    int totalreaders = 0;
+    int totalBooksHiring = 0;
+    @foreach(var item in Model)
+    {
+        totalreaders = Convert.ToInt32(item.totalReaders);
+        totalbooks = Convert.ToInt32(item.totalBooks);
+        totalBooksHiring = Convert.ToInt32(item.BooksBorrowed);
+    }
+
+    int totalBooksInStock = totalbooks - totalBooksHiring;
+}
+
 <!-- Sale & Revenue Start -->
 <div class="container-fluid pt-0 px-4">
     <div class="row g-4">
@@ -9,8 +25,8 @@
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <i class="fa fa-chart-line fa-3x text-primary"></i>
                 <div class="ms-3">
-                    <p class="mb-2">Today Sale</p>
-                    <h6 class="mb-0">$1234</h6>
+                    <p class="mb-2">Readers</p>
+                    <h6 class="mb-0">@totalreaders</h6>
                 </div>
             </div>
         </div>
@@ -18,8 +34,8 @@
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <i class="fa fa-chart-bar fa-3x text-primary"></i>
                 <div class="ms-3">
-                    <p class="mb-2">Total Sale</p>
-                    <h6 class="mb-0">$1234</h6>
+                    <p class="mb-2">Books</p>
+                    <h6 class="mb-0">@totalbooks</h6>
                 </div>
             </div>
         </div>
@@ -27,8 +43,8 @@
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <i class="fa fa-chart-area fa-3x text-primary"></i>
                 <div class="ms-3">
-                    <p class="mb-2">Today Revenue</p>
-                    <h6 class="mb-0">$1234</h6>
+                    <p class="mb-2">Total books in stock</p>
+                    <h6 class="mb-0">@totalBooksInStock</h6>
                 </div>
             </div>
         </div>
@@ -36,8 +52,8 @@
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <i class="fa fa-chart-pie fa-3x text-primary"></i>
                 <div class="ms-3">
-                    <p class="mb-2">Total Revenue</p>
-                    <h6 class="mb-0">$1234</h6>
+                    <p class="mb-2">Total Books Hiring</p>
+                    <h6 class="mb-0">@totalBooksHiring</h6>
                 </div>
             </div>
         </div>
