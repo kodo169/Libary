@@ -3,27 +3,33 @@
 <div class="sidebar pe-4 pb-3 col-12" id="navbarCollapse" style="margin-left:50px;">
     <nav class="navbar bg-light navbar-light">
         <div class="navbar-nav w-100">
-            <div class="nav-item dropdown">
+            <div class="nav-Link dropdown">
                 <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Reader Manager</a>
-                <div class="dropdown-menu m-0 bg-light rounded-0" style="border: none;">
+                <div class="dropdown-menu m-0 bg- rounded-0 bg-ml" style="border: none;">
                     @foreach (var item in Model)
                     {
-                        if (item.checkRole == 1)
+                        if(item.checkRole == 1)
                         {
-                            <a asp-controller="ListReaderBorrowing" asp-action="Index" class="dropdown-item">
+                            <a asp-controller="" asp-action="" asp-route-category="" class="dropdown-item">
                                 Reader Borrowing
+                            </a>
+                        }
+                        if(item.checkRole == 2)
+                        {
+                            <a asp-controller="ReaderViolated" asp-action="Index" asp-route-category="" class="dropdown-item">
+                                Reader Violated
                             </a>
                         }
                         if (item.checkRole == 2)
                         {
-                            <a asp-controller="ReaderViolated" asp-action="Index" class="dropdown-item">
-                                Reader Violated
+                            <a asp-controller="ListWaitingRental" asp-action="Index" asp-route-category="" class="dropdown-item">
+                                Rental Waiting List
                             </a>
                         }
                     }
                 </div>
             </div>
-            <a asp-action="Index" asp-controller="ManagementBook" class="nav-link">Add Books</a>
+            <a asp-action="Index" asp-controller="managementBook" class="nav-item nav-link active">Add Books</a>
         </div>
     </nav>
 </div>
