@@ -8,7 +8,7 @@
                 <div class="dropdown-menu m-0 bg- rounded-0 bg-ml" style="border: none;">
                     @foreach (var item in Model)
                     {
-                        if(item.checkRole == 1)
+                        if(item.checkRole == 2)
                         {
                             <a asp-controller="ListReaderBorrowing" asp-action="Index" asp-route-category="" class="dropdown-item">
                                 Reader Borrowing
