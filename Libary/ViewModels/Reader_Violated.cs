@@ -7,6 +7,6 @@
         public DateOnly DueDate { get; set; }
         
         public int? numberBookHire { get; set; }
-        public int idBill { get; set; }
+        public string idBill { get; set; }
     }
 }
