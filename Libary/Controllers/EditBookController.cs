@@ -75,6 +75,79 @@ namespace Libary.Controllers
         {
             return View(addBook);
         }
+        [HttpGet]
+        [Route("/EditBook/EditBook/{id}")]
+        public IActionResult EditBook(int id)
+        {
+            var book = _data.Books
+                .Include(b => b.Author)
+                .Include(b => b.Category)
+                .FirstOrDefault(b => b.BookId == id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            var model = new addBook
+            {
+                idBook = book.BookId,
+                Title = book.Title,
+                amount = book.NumberBook,
+                price = book.Price,
+                author = book.Author.Name,
+                categoty = book.Category.CategoryName,
+                PublicationYear = book.PublicationYear,
+                Description = book.Content
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("/EditBook/EditBook/{id}")]
+        public IActionResult EditBook(int id, addBook updatedBook)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(updatedBook);
+            }
+
+            var book = _data.Books.FirstOrDefault(b => b.BookId == id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            book.Title = updatedBook.Title;
+            book.NumberBook = updatedBook.amount;
+            book.Price = updatedBook.price;
+            book.Content = updatedBook.Description;
+            book.PublicationYear = updatedBook.PublicationYear;
+            book.AuthorId = _data.Authors.FirstOrDefault(a => a.Name == updatedBook.author)?.AuthorId ?? book.AuthorId;
+            book.CategoryId = _data.Categories.FirstOrDefault(c => c.CategoryName == updatedBook.categoty)?.CategoryId ?? book.CategoryId;
+
+            _data.SaveChanges();
+
+            return Redirect("/inforBook");
+        }
+
+        [HttpPost]
+        [Route("EditBook/DeleteBook/{id}")]
+        public IActionResult DeleteBook(int id)
+        {
+            var book = _data.Books.Find(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            _data.Books.Remove(book);
+            _data.SaveChanges();
+
+            return Redirect("/inforBook"); // Redirect to the index view or wherever you list the books
+        }
+
         [HttpPost]
         public async Task<IActionResult> addPictureBook(IFormFile file)
         {
