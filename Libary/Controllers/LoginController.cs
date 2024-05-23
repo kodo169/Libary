@@ -126,17 +126,17 @@ namespace Libary.Controllers
         [Route("/ChangePass")]
         public IActionResult changePass(string? pass, string? confirmPass) 
         {
+
             if (pass == null || confirmPass == null)
             {
-                TempData["Message"] = "Confirm Password not same Your Password!";
-                return Redirect("/ChangePass");
+                return View();
             }
-            if(pass != confirmPass)
+            if (pass != confirmPass)
             {
                 TempData["Message"] = "Confirm Password not same Your Password!";
                 return Redirect("/ChangePass");
             }
-            if(pass == confirmPass)
+            if (pass == confirmPass)
             {
                 var data = _data.Users.SingleOrDefault(x => x.UserId == Global.id_User);
                 if (data == null)
@@ -149,6 +149,8 @@ namespace Libary.Controllers
             }
             return Redirect("/SignInWhenChangePass");
         }
+
+
         [Route("/SignInWhenChangePass")]
         public IActionResult SignInWhenChangePass() 
         {

@@ -16,10 +16,18 @@ namespace Libary.ViewComponents
         {
             var data = _data.BillInfos
                 .Include(p => p.IdbillNavigation)
-                .Where(p => p.IdbillNavigation.StatusDone == false && p.UserId == Global.id_User && p.IdbillNavigation.StandbyStatus == null)
+                .Where(p => p.IdbillNavigation.StatusDone == null && p.UserId == Global.id_User && p.IdbillNavigation.StandbyStatus == null)
                 .ToList();
-            Global.hireBook = data.Count;
-            return View();
+            int? totalBookHire = 0;
+            foreach (var item in data) 
+            {
+                totalBookHire += item.CountBook;
+            }
+            var Result = new numberBookHire
+            {
+                totalBookHire = totalBookHire
+            };
+            return View(Result);
         }
     }
 }
