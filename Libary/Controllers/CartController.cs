@@ -41,6 +41,7 @@ namespace Libary.Controllers
                 .Include(p => p.BillInfos)
                 // Điều này sử dụng phương thức Select của LINQ để chiếu từng thực thể Book vào một đối tượng cart_ViewModels mới, 
                 // chọn các thuộc tính cụ thể để đưa vào mô hình khung nhìn. 
+
                 .Select(p => new cart_ViewModels
                 {
                     idBill = p.idbill,
@@ -50,6 +51,7 @@ namespace Libary.Controllers
                     nameCategory = p.Category.CategoryName,
                     idCategory =p.CategoryId,
                 }).AsNoTracking().OrderBy(p => p.nameCategory);
+                
                 // AsNoTracking được sử dụng để cải thiện hiệu suất bằng cách không theo dõi các thực thể trong ngữ cảnh vì dữ liệu ở dạng chỉ đọc. 
                 // Các kết quả được sắp xếp theo thuộc tính nameCategory.
 
