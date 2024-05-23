@@ -171,6 +171,7 @@ namespace Libary.Controllers
         public IActionResult logout()
         {
             Global.check_login = false;
+            Global.hireBook = 0;
             Global.role = false;
             return Redirect("/mainIndex");
         }

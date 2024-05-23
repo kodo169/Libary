@@ -7,5 +7,6 @@
         public static int? id_User;
         public static bool role = false;
         public static string namePictute = "";
+        public static int hireBook = 0;
     }
 }

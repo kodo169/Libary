@@ -2,7 +2,15 @@
     ViewData["Title"] = "addToCart";
     Layout = "_LayoutCustomer";
 }
-
+@{
+    string idbill = "";
+    int? totalMoney = 0;
+    @foreach(var item in Model)
+    {
+        totalMoney += item.money * item.numberBookRental;
+    }
+}
+@model IEnumerable<Libary.ViewModels.cart_ViewModels>
 <!-- Cart Page Start -->
         <div class="container-fluid py-5">
             <div class="container py-5">
@@ -19,148 +27,122 @@
                           </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">
-                                    <div class="d-flex align-items-center">
-                                        <img src="img/vegetable-item-3.png" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                                    </div>
-                                </th>
-                                <td>
-                                    <p class="mb-0 mt-4">Big Banana</p>
-                                </td>
-                                <td>
-                                    <p class="mb-0 mt-4">2.99 $</p>
-                                </td>
-                                <td>
-                                    <div class="input-group quantity mt-4" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                            <i class="fa fa-minus"></i>
+                    @foreach(var item in Model)
+                    {
+                        idbill = item.idbill;
+                        <tr>
+                            <th scope="row">
+                                <div class="d-flex align-items-center">
+                                    <img src="~/img/@item.pictureBook" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                </div>
+                            </th>
+                            <td>
+                                <p class="mb-0 mt-4">@item.nameBook</p>
+                            </td>
+                            <td>
+                                <p class="mb-0 mt-4">@item.money $</p>
+                            </td>
+                            <td>
+                                <div class="input-group quantity mt-4" style="width: 100px;">
+                                    <div class="input-group-btn">
+                                        <form asp-action="plus_minusBook" asp-controller="Cart" asp-route-numberBook="@(item.numberBookRental - 1)" asp-route-idBillInfor="@item.idbillinfor">
+                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                <i class="fa fa-minus"></i>
                                             </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                        <div class="input-group-btn">
+                                        </form>
+                                    </div>
+                                    <input type="text" class="form-control form-control-sm text-center border-0" value="@item.numberBookRental">
+                                    <div class="input-group-btn">
+                                        <form asp-action="plus_minusBook" asp-controller="Cart" asp-route-numberBook="@(item.numberBookRental + 1)" asp-route-idBillInfor="@item.idbillinfor">
                                             <button class="btn btn-sm btn-plus rounded-circle bg-light border">
                                                 <i class="fa fa-plus"></i>
                                             </button>
-                                        </div>
+                                        </form>
+
                                     </div>
-                                </td>
-                                <td>
-                                    <p class="mb-0 mt-4">2.99 $</p>
-                                </td>
-                                <td>
-                                    <button class="btn btn-md rounded-circle bg-light border mt-4" >
+                                </div>
+                            </td>
+                            <td>
+                                <p class="mb-0 mt-4">@(item.numberBookRental * item.money)$</p>
+                            </td>
+                            <td>
+                                <form asp-action="removeAddCart" asp-controller="Cart" asp-route-idBillInfor="@item.idbillinfor">
+                                    <button class="btn btn-md rounded-circle bg-light border mt-4">
                                         <i class="fa fa-times text-danger"></i>
                                     </button>
-                                </td>
-                            
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="d-flex align-items-center">
-                                        <img src="img/vegetable-item-5.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="" alt="">
-                                    </div>
-                                </th>
-                                <td>
-                                    <p class="mb-0 mt-4">Potatoes</p>
-                                </td>
-                                <td>
-                                    <p class="mb-0 mt-4">2.99 $</p>
-                                </td>
-                                <td>
-                                    <div class="input-group quantity mt-4" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                            <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <p class="mb-0 mt-4">2.99 $</p>
-                                </td>
-                                <td>
-                                    <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                                        <i class="fa fa-times text-danger"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="d-flex align-items-center">
-                                        <img src="img/vegetable-item-2.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="" alt="">
-                                    </div>
-                                </th>
-                                <td>
-                                    <p class="mb-0 mt-4">Awesome Brocoli</p>
-                                </td>
-                                <td>
-                                    <p class="mb-0 mt-4">2.99 $</p>
-                                </td>
-                                <td>
-                                    <div class="input-group quantity mt-4" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                            <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <p class="mb-0 mt-4">2.99 $</p>
-                                </td>
-                                <td>
-                                    <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                                        <i class="fa fa-times text-danger"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                                </form>
+
+                            </td>
+
+                        </tr>
+                    }
+
                         </tbody>
                     </table>
                 </div>
-                <div class="mt-5">
-                    <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
-                    <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply Coupon</button>
+            <div class="col-md-12 d-flex justify-content-end">
+                @* <form asp-action="actionOder" asp-controller="Cart" asp-route-idBill="@idbill"> *@
+                <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" data-bs-toggle="modal" data-bs-target="#addCart" type="button">Oder</button>
+@*                 </form> *@
                 </div>
-                <div class="row g-4 justify-content-end">
-                    <div class="col-8"></div>
-                    <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                        <div class="bg-light rounded">
-                            <div class="p-4">
-                                <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
-                                <div class="d-flex justify-content-between mb-4">
-                                    <h5 class="mb-0 me-4">Subtotal:</h5>
-                                    <p class="mb-0">$96.00</p>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="mb-0 me-4">Shipping</h5>
-                                    <div class="">
-                                        <p class="mb-0">Flat rate: $3.00</p>
+            </div>
+    <!-- Cart Page End -->
+    <!-- Notify Start -->
+            <div class="modal fade" id="addCart" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-fullscreen">
+                    <div class="modal-content rounded-0">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="row modal-body d-flex align-items-center">
+                            <div class="input-group w-75 mx-auto d-flex">
+                                <div class="container-fluid pt-4 px-4">
+                                        <div class="col-sm-12 col-xl-12">
+                                            <div class="bg-light rounded h-100 p-4">
+                                                <h6 class="mb-4">Confirm Your Order</h6>
+                                                <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Name Book</th>
+                                                        <th scope="col">Amount</th>
+                                                        <th scope="col">Price</th>
+                                                        <th scope="col">Total</th>
+                                                    </tr>
+                                                </thead>
+                                            @foreach(var item in Model)
+                                            {
+                                                <tbody>
+                                                    <tr>
+                                                        <td>@item.nameBook</td>
+                                                        <td>@item.numberBookRental</td>
+                                                        <td>@item.money$</td>
+                                                        <td>@(item.numberBookRental * item.money)$</td>
+                                                    </tr>
+                                                </tbody>
+                                            } 
+                                            </table>
+                                    </div>
+                                    <div class="row">
+                                        <label style="color: black; text-align:end;">Total Price : @totalMoney$</label>
+                                    </div>
+                                    <div class="row">
+                                    <h9 style="color:black;"> <a style="color:red;">(*)</a> Your ID Order is <a style="color:red;">@idbill</a> (Give Libarian when hire books)</h9>
                                     </div>
                                 </div>
-                                <p class="mb-0 text-end">Shipping to Ukraine.</p>
                             </div>
-                            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                                <h5 class="mb-0 ps-4 me-4">Total</h5>
-                                <p class="mb-0 pe-4">$99.00</p>
+                            <form asp-action="actionOder" asp-controller="Cart" asp-route-idBill="@idbill">
+                                <div class="input-group-append pt-4 px-4">
+                                    <button class="btn" type="submit" id="search-icon-1" style="background-color:#0dcaf059 ; height: 75px;width:100px;border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
+                                            Confirm   
+                                    </button>
+                                </div>
+                            </form>
+
                             </div>
-                            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Cart Page End -->
+<!-- Notify end -->
