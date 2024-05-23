@@ -45,6 +45,7 @@ namespace Libary.Controllers
         {
             var data = _data.BillInfos.Where(p => p.IdbillInfo == idBillInfor).FirstOrDefault();
             if(data == null) return Redirect("/404");
+            if(numberBook <= 0) return RedirectToAction("removeAddCart", new { idbillInfor = idBillInfor});
             data.CountBook = numberBook;
             _data.SaveChanges();
             return Redirect("/addCart");
