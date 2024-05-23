@@ -1,6 +1,7 @@
 ﻿using Libary.Data;
 using Libary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Libary.Controllers
 {
@@ -74,8 +75,6 @@ namespace Libary.Controllers
         {
             return View(addBook);
         }
-
-
         [HttpPost]
         public async Task<IActionResult> addPictureBook(IFormFile file)
         {
