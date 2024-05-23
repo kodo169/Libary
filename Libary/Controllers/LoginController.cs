@@ -175,5 +175,31 @@ namespace Libary.Controllers
             Global.role = false;
             return Redirect("/mainIndex");
         }
+
+        [HttpPost]
+        [Route("/SignUp")]
+        public IActionResult SignUp(string username, string email, string password)
+        {
+            if (_data.Users.Any(u => u.Email == email))
+            {
+                TempData["Message"] = "Email already exists!";
+                return Redirect("/indexLogin");
+            }
+
+            var newUser = new User
+            {
+                Username = username,
+                Name = username,
+                Email = email,
+                PasswordHash = password,
+                RoleId = 1 
+            };
+
+            _data.Users.Add(newUser);
+            _data.SaveChanges();
+
+            TempData["Message"] = "Registration successful! Please sign in.";
+            return Redirect("/indexLogin");
+        }
     }
 }
