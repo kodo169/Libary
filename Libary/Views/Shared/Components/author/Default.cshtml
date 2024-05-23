@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Libary.Data.Author>
+<div class="mb-3 col-md-6">
+    <label class="form-label">Author</label>
+    <select id="categorySelect" class="form-control" name="Oderauthor" onchange="toggleAuthorInput(this)">
+        @foreach (var item in Model)
+        {
+            <option value="@item.Name">@item.Name</option>
+        }
+        <option value="0">Other</option>
+    </select>
+    <input type="text" id="newAuthorInput" class="form-control mt-2" name="author" style="display:none;" placeholder="Enter a new Author" />
+</div>
+
+<script>
+    function toggleAuthorInput(select) {
+        var input = document.getElementById("newAuthorInput");
+        if (select.value === "0") {
+            input.style.display = "block";
+        } else {
+            input.style.display = "none";
+            input.value = "";
+        }
+    }
+</script>

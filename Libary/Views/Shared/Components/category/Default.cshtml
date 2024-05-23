@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Libary.Data.Category>
+<div class="mb-3 col-md-6">
+    <label class="form-label">Category</label>
+    <select id="categorySelect" class="form-control" name="Odercategoty" onchange="toggleCategoryInput(this)">
+        @foreach (var item in Model)
+        {
+            <option value="@item.CategoryName">@item.CategoryName</option>
+        }
+        <option value="0">Other</option>
+    </select>
+    <input type="text" id="newCategoryInput" class="form-control mt-2" name="categoty" style="display:none;" placeholder="Enter a new category" />
+</div>
+
+<script>
+    function toggleCategoryInput(select) {
+        var input = document.getElementById("newCategoryInput");
+        if (select.value === "0") {
+            input.style.display = "block";
+        } else {
+            input.style.display = "none";
+            input.value = "";
+        }
+    }
+</script>
