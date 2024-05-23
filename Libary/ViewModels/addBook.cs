@@ -2,6 +2,7 @@
 {
     public class addBook
     {
+        public int? idBook { get; set; }
         public string? Title { get; set; }
         public int amount { get; set; }
         public string? categoty { get; set; }
