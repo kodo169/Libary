@@ -4,13 +4,17 @@
 // Write your JavaScript code.
 
 // Tăng số lượng sách trong giỏ hàng
-$(".AddToCart_Btn").on("click", function(){
+$(document).ready(function () {
     let x = 0;
-    x = 0 + Number($("#NumberItem_Cart").text());
-    $("#NumberItem_Cart").text
-    (
+
+    $(".AddToCart_Btn").on("click", function(){
+        
+        x = 0 + Number($("#NumberItem_Cart").text());
+        $("#NumberItem_Cart").text
         (
-            x + 1
-        )
-    );
+            (
+                x + 1
+            )
+        );
+    });
 });
