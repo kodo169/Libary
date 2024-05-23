@@ -20,7 +20,7 @@ namespace Libary.Controllers
         {
             var data = _data.BillInfos
                 .Include(p => p.IdbillNavigation)
-                .Where(p => p.IdbillNavigation.StatusDone == false && p.UserId == Global.id_User && p.IdbillNavigation.StandbyStatus == null)
+                .Where(p => p.IdbillNavigation.StatusDone == null && p.UserId == Global.id_User && p.IdbillNavigation.StandbyStatus == null)
                 .ToList();
             var result = new List<cart_ViewModels>();
             foreach (var item in data)
@@ -67,8 +67,55 @@ namespace Libary.Controllers
             Global.hireBook = 0;
             return Redirect("/addCart");
         }
-        public IActionResult addOrderCart()
+        public string RandomString()
         {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            string idBill = new string(Enumerable.Repeat(chars, 6)
+                                         .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            var existingBill = _data.Bills.FirstOrDefault(item => item.Idbill == idBill);
+            if (existingBill != null)
+            {
+                return RandomString();
+            }
+            return idBill;
+        }
+        public IActionResult addOrderCart(int idBook)
+        {
+            var dataCheck = _data.BillInfos
+                .Include(p => p.IdbillNavigation)
+                .Where(p => p.UserId == Global.id_User && p.IdbillNavigation.StandbyStatus == null)
+                .FirstOrDefault();
+            string idBill = "";
+            if (dataCheck == null)
+            {
+
+                var dataBill = new Bill();
+                dataBill.Idbill = RandomString();
+                idBill = dataBill.Idbill;
+                dataBill.DueDate = DateOnly.FromDateTime(DateTime.Now);
+                dataBill.LoanDate = DateOnly.FromDateTime(DateTime.Now.AddDays(7));
+                dataBill.ReturnDate = null;
+                dataBill.StatusDone = null;
+                dataBill.StandbyStatus =  null;
+                _data.Add(dataBill);
+                _data.SaveChanges();
+            }
+            else
+            {
+                idBill = dataCheck.Idbill;
+            }
+            var data = _data.Bills
+                .Where(p =>p.Idbill == idBill)
+                .FirstOrDefault();
+            var addBillInfor = new BillInfo();
+            addBillInfor.Idbill = data.Idbill;
+            addBillInfor.BookId = idBook;
+            addBillInfor.UserId = Global.id_User;
+            addBillInfor.CountBook = 1;
+            _data.Add(addBillInfor);
+            _data.SaveChanges();
             return Redirect("/mainIndex");
         }
     }
