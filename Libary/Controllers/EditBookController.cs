@@ -20,8 +20,6 @@ namespace Libary.Controllers
         [HttpPost]
         public IActionResult actionAddBook(addBook _addBook)
         {
-            //bool checkCategory = false;
-            //bool checkAuthor = false;
             var newBook = new Book();
             if (_addBook != null && _addBook.amount != 0)
             {
@@ -52,7 +50,7 @@ namespace Libary.Controllers
                     _data.Add(addnewAuthor);
                     _data.SaveChanges();
                     var datacheckAuthor = _data.Authors.Where(p => p.Name == _addBook.author).FirstOrDefault();
-                    newBook.CategoryId = datacheckAuthor.AuthorId;
+                    newBook.AuthorId = datacheckAuthor.AuthorId;
 
                 }
                 newBook.PictureBook = Global.namePictute;
